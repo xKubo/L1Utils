@@ -22,7 +22,7 @@ CParameters ParseParameters(int argc, char** argv)
 
 using namespace std;
 using namespace Win32;
-
+ 
 template <typename T, typename ... Args>
 inline void ArgsToWString(wostringstream &woss, T&& t, Args&&... args...)
 {
