@@ -2,16 +2,18 @@
 //
 
 #include "stdafx.h"
+
 #include <vector>
 #include <db/DBIntf.h>
 #include <win32/Win32Err.h>
 #include <Check.h>
+#include <GSL/string_span.h>
 
 using namespace std;
 
 struct CParameters
 {
-	vector<pair<gsl::span, gsl::span>> m_Parameters;
+	vector<pair<gsl::string_span<>, gsl::string_span<>>> m_Parameters;
 };
 
 CParameters ParseParameters(int argc, char** argv)
