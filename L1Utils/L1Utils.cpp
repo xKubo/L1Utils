@@ -11,7 +11,7 @@ using namespace std;
 
 struct CParameters
 {
-
+	vector<pair<gsl::span, gsl::span>> m_Parameters;
 };
 
 CParameters ParseParameters(int argc, char** argv)
