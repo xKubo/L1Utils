@@ -13,12 +13,23 @@ using namespace std;
 
 using TStringView = gsl::string_span<>;
 
+inline std::ostream& operator<<(ostream& o, const TStringView& v)
+{
+	o.write(v.data(), v.size());
+	return o;
+}
+
 struct CParameters
 {
 	using TParams = vector<pair<TStringView, TStringView>>;
 	CParameters(TParams p) : m_Parameters(p)
 	{
 
+	}
+
+	const TParams& Params()
+	{
+		return m_Parameters;
 	}
 
 	CParameters() {}
@@ -80,12 +91,12 @@ struct CScreen
 		Win32Check(ReadConsoleOutput(c.Handle(), m_Data.data(), m_Info.dwSize, { 0, 0 }, &sr), "ReadOutput");
 	}
 
-	int Width() const
+	short Width() const
 	{
 		return m_Info.dwSize.X;
 	}
 
-	int Height() const
+	short Height() const
 	{
 		return m_Info.dwSize.Y;
 	}
@@ -143,10 +154,17 @@ private:
 };
 
 
-int main()
+int main(int argc, char* argv[])
 {
 	try
 	{
+
+		CParameters Params = ParseParameters(argc, argv);
+		for (const auto& Param : Params.Params())
+		{
+			cout << Param.first << " = " << Param.second << endl;
+		}
+
 		cout << "Test" << endl;
 		CConsole c;
 		SetConsoleTextAttribute(c.Handle(), FOREGROUND_GREEN | FOREGROUND_INTENSITY | 0);
