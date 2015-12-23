@@ -11,14 +11,26 @@
 
 using namespace std;
 
+using TStringView = gsl::string_span<>;
+
 struct CParameters
 {
-	vector<pair<gsl::string_span<>, gsl::string_span<>>> m_Parameters;
+	using TParams = vector<pair<TStringView, TStringView>>;
+	CParameters(TParams p) : m_Parameters(p)
+	{
+
+	}
+
+	CParameters() {}
+private:
+	TParams m_Parameters;
 };
 
 CParameters ParseParameters(int argc, char** argv)
 {
-	return{};
+	CParameters::TParams p;
+
+	return p;
 }
 
 
