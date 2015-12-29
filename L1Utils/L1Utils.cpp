@@ -19,27 +19,23 @@ inline std::ostream& operator<<(ostream& o, const TStringView& v)
 	return o;
 }
 
-struct CParameters
+
+using TParams = vector<pair<TStringView, TStringView>>;
+
+
+
+
+struct CParameters : TParams
 {
-	using TParams = vector<pair<TStringView, TStringView>>;
-	CParameters(TParams p) : m_Parameters(p)
-	{
+	using TParams::TParams;
 
-	}
-
-	const TParams& Params()
-	{
-		return m_Parameters;
-	}
-
-	CParameters() {}
-private:
-	TParams m_Parameters;
+	
 };
 
+// Parse parameters 
 CParameters ParseParameters(int argc, char** argv)
 {
-	CParameters::TParams p;
+	CParameters p;
 
 	return p;
 }
@@ -188,8 +184,6 @@ int main(int argc, char* argv[])
 		cerr << e.what() << endl;
 	}
 
-	// Just a small change
-	// Just a small change 2
 
 	return 0;
 }
