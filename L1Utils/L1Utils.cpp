@@ -113,6 +113,25 @@ struct CLogContext
 
 };
 
+enum TextColors : WORD
+{
+	Black = 0,
+	Red = FOREGROUND_RED,
+	Blue = FOREGROUND_BLUE,
+	Green = FOREGROUND_GREEN,
+	Yellow = FOREGROUND_RED | FOREGROUND_GREEN,
+	Cyan = FOREGROUND_BLUE | FOREGROUND_GREEN,
+	Magenta = FOREGROUND_BLUE | FOREGROUND_RED,
+	Gray = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED,
+	LightRed = Red | FOREGROUND_INTENSITY,
+	LightBlue = Blue | FOREGROUND_INTENSITY,
+	LightGreen = Green | FOREGROUND_INTENSITY,
+	LightYellow = Yellow | FOREGROUND_INTENSITY,
+	LightCyan = Cyan | FOREGROUND_INTENSITY,
+	LightMagenta = Magenta | FOREGROUND_INTENSITY,
+	White = Gray | FOREGROUND_INTENSITY,
+};
+
 struct CConsoleLogReporter
 {
 	void SetTextColor(WORD Color)
@@ -125,10 +144,10 @@ struct CConsoleLogReporter
 		DWORD dwWritten;
 		Win32::Win32Check(WriteConsole(m_Console.Handle(), ws.data(), ws.size(), &dwWritten, nullptr), "WriteConsole");
 		Win32::Check(dwWritten == ws.size(), "AllWritten");
-		SetTextColor(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		SetTextColor(Gray);
 	}
 private:
-	WORD Colors[4] = { FOREGROUND_RED | FOREGROUND_INTENSITY, FOREGROUND_RED, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED };
+	WORD Colors[4] = { LightRed, Red, LightCyan, Gray};
 	CConsole m_Console;
 };
 
@@ -156,7 +175,7 @@ int main(int argc, char* argv[])
 	{
 
 		CParameters Params = ParseParameters(argc, argv);
-		for (const auto& Param : Params.Params())
+		for (const auto& Param : Params)
 		{
 			cout << Param.first << " = " << Param.second << endl;
 		}
